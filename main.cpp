@@ -8,8 +8,13 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdexcept>
+#include "cave.h"
 
 int verifySizeArgument(char *size) {
+	// If size argument is left empty, an exception is thrown.
+	if (size == NULL)
+		throw std::invalid_argument("No size provided.");
+	
 	if (!(std::atoi(size) > 3))
 		throw std::invalid_argument("Invalid size");
 	
@@ -35,7 +40,9 @@ int main(int argc, const char * argv[]) {
 	int size = verifySizeArgument((char*)argv[1]);
 	bool debugMode = verifyDebugArgument((char*)argv[2]);
 	
-	std::cout << std::boolalpha << debugMode << std::endl;
+	Cave cave(size);
+	
+	cave.print(debugMode);
 	
     return 0;
 }

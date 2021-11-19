@@ -5,4 +5,14 @@
 //  Created by Nils Streedain on 11/17/21.
 //
 
-#include "gold.hpp"
+#include "gold.h"
+
+Gold::Gold() {
+	perceptMessage = "You see a glimmer nearby.";
+	eventID = 'g';
+	
+}
+
+void Gold::encounter() {
+	
+}

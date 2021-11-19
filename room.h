@@ -8,6 +8,16 @@
 #ifndef room_h
 #define room_h
 
-#include <stdio.h>
+#include <iostream>
+#include "event.h"
+
+class Room {
+private:
+	Event* event;
+public:
+	Room();
+	Event* getEvent() const;
+	void setEvent(Event*);
+};
 
 #endif /* room_h */

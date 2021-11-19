@@ -8,6 +8,18 @@
 #ifndef event_h
 #define event_h
 
-#include <stdio.h>
+#include <iostream>
+
+class Event {
+protected:
+	std::string perceptMessage;
+	char eventID;
+public:
+	Event();
+	
+	void percept() const;
+	char getId() const;
+	virtual void encounter()=0;
+};
 
 #endif /* event_h */

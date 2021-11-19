@@ -8,6 +8,13 @@
 #ifndef gold_h
 #define gold_h
 
-#include <stdio.h>
+#include <iostream>
+#include "event.h"
+
+class Gold : public Event {
+public:
+	Gold();
+	void encounter() override;
+};
 
 #endif /* gold_h */

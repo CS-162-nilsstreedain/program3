@@ -8,6 +8,13 @@
 #ifndef wumpus_h
 #define wumpus_h
 
-#include <stdio.h>
+#include <iostream>
+#include "event.h"
+
+class Wumpus : public Event {
+public:
+	Wumpus();
+	void encounter() override;
+};
 
 #endif /* wumpus_h */

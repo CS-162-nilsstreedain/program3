@@ -5,4 +5,13 @@
 //  Created by Nils Streedain on 11/17/21.
 //
 
-#include "wumpus.hpp"
+#include "wumpus.h"
+
+Wumpus::Wumpus() {
+	perceptMessage = "You smell a terrible stench.";
+	eventID = 'w';
+}
+
+void Wumpus::encounter() {
+	
+}
