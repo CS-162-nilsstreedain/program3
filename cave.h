@@ -16,19 +16,42 @@ class Cave {
 private:
 	int size;
 	std::vector<std::vector<Room*>> cave;
-	int xpos;
-	int ypos;
+	int userX;
+	int userY;
 	
-	Room* getRoom(int, int) const;
-	Room* getRandomRoom() const;
-	void addEventToRandRoom(Event*);
-public:
-	Cave(int);
+	bool gameOver;
+	bool wumpusAlive;
+	bool goldCollected;
+	
+	void setupRandomRoom(Event*);
+	bool setupRoom(int, int, Event*);
 	
 	void printSeparator() const;
 	void printEvents(Room*) const;
-	void printUserPos() const;
+	void printUserPos(Room*) const;
+	void percept(int, int) const;
+	
+	void arrowRoom(int, int);
+public:
+	Cave(int);
+	Room* getRoom(int, int) const;
+	bool isGameOver() const;
+	bool isWumpusAlive() const;
+	bool isGoldCollected() const;
+	void percepts() const;
 	void print(bool) const;
+	
+	void moveUp();
+	void moveDown();
+	void moveLeft();
+	void moveRight();
+	
+	void arrowUp();
+	void arrowDown();
+	void arrowLeft();
+	void arrowRight();
+	
+	void encounter();
 };
 
 #endif /* cave_h */

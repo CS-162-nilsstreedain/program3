@@ -6,9 +6,12 @@
 //
 
 #include "room.h"
+#include "empty.h"
 
-Room::Room() {
-	this->event = nullptr;
+Room::Room(int Xpos, int Ypos) {
+	this->Xpos = Xpos;
+	this->Ypos = Ypos;
+	this->event = new Empty;
 }
 
 Event* Room::getEvent() const {
@@ -17,4 +20,12 @@ Event* Room::getEvent() const {
 
 void Room::setEvent(Event* event) {
 	this->event = event;
+}
+
+int Room::getXpos() const {
+	return Xpos;
+}
+
+int Room::getYpos() const {
+	return Ypos;
 }

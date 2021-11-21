@@ -13,11 +13,16 @@
 
 class Room {
 private:
+	int Xpos;
+	int Ypos;
 	Event* event;
 public:
-	Room();
+	Room(int, int);
 	Event* getEvent() const;
 	void setEvent(Event*);
+
+	int getXpos() const;
+	int getYpos() const;
 };
 
 #endif /* room_h */
