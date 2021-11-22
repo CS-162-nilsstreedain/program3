@@ -52,11 +52,18 @@ Cave::Cave(int size) {
 	goldCollected = false;
 }
 
-//Cave::~Cave() {
-//	for (int i = 0; i < size; i++)
-//		for (int j = 0; j < size; j++)
-//			delete getRoom(i, j);
-//}
+/*********************************************************************
+ ** Function: ~Cave()
+ ** Description: Destructor for the cave class
+ ** Parameters: N/A
+ ** Pre-Conditions: N/A
+ ** Post-Conditions: The cave will be destructed.
+ *********************************************************************/
+Cave::~Cave() {
+	for (int i = 0; i < size; i++)
+		for (int j = 0; j < size; j++)
+			delete getRoom(i, j);
+}
 
 /*********************************************************************
  ** Function: Cave()
@@ -77,7 +84,7 @@ Cave::Cave(const Cave& cave) {
 	for (int i = 0; i < size; i++) {
 		std::vector<Room*> column;
  		for (int j = 0; j < size; j++)
-			column.push_back(cave.getRoom(i, j));
+			column.push_back(new Room(i, j, cave.getRoom(i, j)->getEvent()));
 		this->cave.push_back(column);
 	}
 }

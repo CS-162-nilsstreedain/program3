@@ -38,7 +38,7 @@ private:
 	void batEncounter();
 public:
 	Cave(int);
-//	~Cave();
+	~Cave();
 	Cave(const Cave&);
 	Cave& operator= (const Cave&);
 	
