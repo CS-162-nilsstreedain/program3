@@ -1,9 +1,11 @@
-//
-//  rope.hpp
-//  Program 3
-//
-//  Created by Nils Streedain on 11/19/21.
-//
+/******************************************************
+** Program: rope.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Rope event object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef rope_h
 #define rope_h
@@ -14,7 +16,6 @@
 class Rope : public Event {
 public:
 	Rope();
-	void encounter() override;
 };
 
 #endif /* rope_h */

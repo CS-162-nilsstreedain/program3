@@ -1,9 +1,11 @@
-//
-//  empty.h
-//  Program 3
-//
-//  Created by Nils Streedain on 11/20/21.
-//
+/******************************************************
+** Program: empty.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Empty event object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef empty_h
 #define empty_h
@@ -14,7 +16,6 @@
 class Empty : public Event {
 public:
 	Empty();
-	void encounter() override;
 };
 
 #endif /* empty_h */

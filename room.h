@@ -1,9 +1,11 @@
-//
-//  room.h
-//  Program 3
-//
-//  Created by Nils Streedain on 11/17/21.
-//
+/******************************************************
+** Program: room.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Room object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef room_h
 #define room_h
@@ -18,6 +20,7 @@ private:
 	Event* event;
 public:
 	Room(int, int);
+	~Room();
 	Event* getEvent() const;
 	void setEvent(Event*);
 

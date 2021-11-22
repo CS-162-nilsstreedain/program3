@@ -1,9 +1,11 @@
-//
-//  event.h
-//  Program 3
-//
-//  Created by Nils Streedain on 11/17/21.
-//
+/******************************************************
+** Program: event.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Event object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef event_h
 #define event_h
@@ -16,10 +18,10 @@ protected:
 	char eventID;
 public:
 	Event();
+//	virtual ~Event()=0;
 	
 	void percept() const;
 	char getId() const;
-	virtual void encounter()=0;
 };
 
 #endif /* event_h */

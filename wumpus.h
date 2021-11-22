@@ -1,9 +1,11 @@
-//
-//  wumpus.h
-//  Program 3
-//
-//  Created by Nils Streedain on 11/17/21.
-//
+/******************************************************
+** Program: wumpus.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Wumpus event object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef wumpus_h
 #define wumpus_h
@@ -14,7 +16,6 @@
 class Wumpus : public Event {
 public:
 	Wumpus();
-	void encounter() override;
 };
 
 #endif /* wumpus_h */

@@ -1,9 +1,11 @@
-//
-//  pit.hpp
-//  Program 3
-//
-//  Created by Nils Streedain on 11/17/21.
-//
+/******************************************************
+** Program: pit.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Pit event object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef pit_h
 #define pit_h
@@ -14,7 +16,6 @@
 class Pit : public Event {
 public:
 	Pit();
-	void encounter() override;
 };
 
 #endif /* pit_h */

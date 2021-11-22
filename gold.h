@@ -1,9 +1,11 @@
-//
-//  gold.h
-//  Program 3
-//
-//  Created by Nils Streedain on 11/17/21.
-//
+/******************************************************
+** Program: gold.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Gold event object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef gold_h
 #define gold_h
@@ -14,7 +16,6 @@
 class Gold : public Event {
 public:
 	Gold();
-	void encounter() override;
 };
 
 #endif /* gold_h */

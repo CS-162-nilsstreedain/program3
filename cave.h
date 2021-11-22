@@ -1,9 +1,11 @@
-//
-//  cave.h
-//  Program 3
-//
-//  Created by Nils Streedain on 11/18/21.
-//
+/******************************************************
+** Program: cave.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Cave object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef cave_h
 #define cave_h
@@ -24,7 +26,6 @@ private:
 	bool goldCollected;
 	
 	void setupRandomRoom(Event*);
-	bool setupRoom(int, int, Event*);
 	
 	void printSeparator() const;
 	void printEvents(Room*) const;
@@ -32,8 +33,15 @@ private:
 	void percept(int, int) const;
 	
 	void arrowRoom(int, int);
+	
+	void ropeEncounter();
+	void batEncounter();
 public:
 	Cave(int);
+//	~Cave();
+	Cave(const Cave&);
+	Cave& operator= (const Cave&);
+	
 	Room* getRoom(int, int) const;
 	bool isGameOver() const;
 	bool isWumpusAlive() const;

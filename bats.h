@@ -1,9 +1,11 @@
-//
-//  bats.h
-//  Program 3
-//
-//  Created by Nils Streedain on 11/17/21.
-//
+/******************************************************
+** Program: bats.h
+** Author: Nils Streedain
+** Date: 11/21/2021
+** Description: Bats event object header file
+** Input: N/A
+** Output: N/A
+******************************************************/
 
 #ifndef bats_h
 #define bats_h
@@ -14,7 +16,6 @@
 class Bats : public Event {
 public:
 	Bats();
-	void encounter() override;
 };
 
 #endif /* bats_h */
