@@ -26,6 +26,7 @@
  *********************************************************************/
 Cave::Cave(int size, int seed) {
 	this->size = size;
+	this->seed = seed;
 	// Fill 2D vector matrix of size by size with empty rooms
 	for (int i = 0; i < size; i++) {
 		// Create/Fill a 1D vector for each column of the matrix
@@ -38,13 +39,13 @@ Cave::Cave(int size, int seed) {
 	}
 	
 	// Add all the required events to the cave rooms.
-	setupRandomRoom(new Rope, seed);
-	setupRandomRoom(new Wumpus, seed);
-	setupRandomRoom(new Pit, seed);
-	setupRandomRoom(new Pit, seed);
-	setupRandomRoom(new Bats, seed);
-	setupRandomRoom(new Bats, seed);
-	setupRandomRoom(new Gold, seed);
+	setupRandomRoom(new Rope);
+	setupRandomRoom(new Wumpus);
+	setupRandomRoom(new Pit);
+	setupRandomRoom(new Pit);
+	setupRandomRoom(new Bats);
+	setupRandomRoom(new Bats);
+	setupRandomRoom(new Gold);
 	
 	// Sets local variables for the cave
 	gameOver = false;
@@ -148,7 +149,7 @@ void Cave::percepts() const {
  ** Pre-Conditions: event must be provided
  ** Post-Conditions: A random empty room will be found and an event will be added ot it
  *********************************************************************/
-void Cave::setupRandomRoom(Event *event, int seed) {
+void Cave::setupRandomRoom(Event *event) {
 	srand(seed);
 	Room* randRoom;
 	int randX, randY;
@@ -220,7 +221,6 @@ void Cave::printUserPos(Room* room) const {
  ** Post-Conditions: The cave will be printed to the command line
  *********************************************************************/
 void Cave::print(bool debugMode) const {
-	std::cout << "\x1B[2J\x1B[H";
 	for (int i = 0; i < size; i++) {
 		printSeparator();
 		for (int j = 0; j < size; j++)
@@ -295,6 +295,27 @@ void Cave::arrowRoom(int x, int y) {
 }
 
 /*********************************************************************
+ ** Function: moveWumpus()
+ ** Description: Function for move the wumpus if the user misses it.
+ ** Parameters: N/A
+ ** Pre-Conditions: Wumpus must be alive
+ ** Post-Conditions: The Wumpus will be moved 75% of the time if it is alive and the user misses it with an arrow
+ *********************************************************************/
+void Cave::moveWumpus() {
+	if (wumpusAlive && rand() % 100 < 75)
+		for (int i = 0; i < size; i++)
+			for (int j = 0; j < size; j++) {
+				Room* room = getRoom(i, j);
+				if (room->getEvent()->getId() == 'w') {
+					room->setEvent(new Empty);
+					seed = rand();
+					setupRandomRoom(new Wumpus);
+					return;
+				}
+			}
+}
+
+/*********************************************************************
  ** Function: arrowUp()
  ** Description: Function for shooting an arrow up a  on the map
  ** Parameters: N/A
@@ -304,6 +325,7 @@ void Cave::arrowRoom(int x, int y) {
 void Cave::arrowUp() {
 	for (int i = 1; i < 4; i++)
 		arrowRoom(userX - i, userY);
+	moveWumpus();
 }
 
 /*********************************************************************
@@ -316,6 +338,7 @@ void Cave::arrowUp() {
 void Cave::arrowDown() {
 	for (int i = 1; i < 4; i++)
 		arrowRoom(userX + i, userY);
+	moveWumpus();
 }
 
 /*********************************************************************
@@ -328,6 +351,7 @@ void Cave::arrowDown() {
 void Cave::arrowLeft() {
 	for (int i = 1; i < 4; i++)
 		arrowRoom(userX, userY - i);
+	moveWumpus();
 }
 
 /*********************************************************************
@@ -340,6 +364,7 @@ void Cave::arrowLeft() {
 void Cave::arrowRight() {
 	for (int i = 1; i < 4; i++)
 		arrowRoom(userX, userY + i);
+	moveWumpus();
 }
 
 /*********************************************************************
@@ -398,7 +423,7 @@ void Cave::ropeEncounter() {
 		std::cout << "You have escpaed the cave with the gold!" << std::endl;
 		gameOver = true;
 	} else
-		std::cout << "You may not leave the cave without the gold." << std::endl;
+		std::cout << "You may not leave the cave without collecting the gold." << std::endl;
 }
 
 /*********************************************************************

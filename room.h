@@ -21,6 +21,7 @@ private:
 public:
 	Room(int, int);
 	~Room();
+	
 	Event* getEvent() const;
 	void setEvent(Event*);
 

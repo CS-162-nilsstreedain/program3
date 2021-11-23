@@ -70,6 +70,7 @@ char getUserInput(std::string inputMessage) {
 	system("stty raw");
 	char input = getchar();
 	system("stty cooked");
+	std::cout << "\x1B[2J\x1B[H";
 	
 	std::cout << std::endl;
 	return input;
@@ -82,8 +83,9 @@ char getUserInput(std::string inputMessage) {
  ** Pre-Conditions: cave must be provided
  ** Post-Conditions: an arrow will be fired in the direction specified
  *********************************************************************/
-void fireArrow(Cave *cave) {
-	switch (getUserInput("Press a key to fire an arrow: (W) North, (A) West, (S) South, (D) East")) {
+void fireArrow(Cave *cave, bool debugMode) {
+	cave->print(debugMode);
+	switch (getUserInput("\nPress a key to fire an arrow: (W) North, (A) West, (S) South, (D) East")) {
 		case 'w':
 			cave->arrowUp();
 			break;
@@ -97,7 +99,7 @@ void fireArrow(Cave *cave) {
 			cave->arrowRight();
 			break;
 		default:
-			fireArrow(cave);
+			fireArrow(cave, debugMode);
 			break;
 	}
 }
@@ -109,7 +111,7 @@ void fireArrow(Cave *cave) {
  ** Pre-Conditions: cave & numArrows must be provided
  ** Post-Conditions: the move will be made and if applicable, the number of arrows will be reduced and returned.
  *********************************************************************/
-int chooseMove(Cave *cave, int numArrows) {
+int chooseMove(Cave *cave, int numArrows, bool debugMode) {
 	switch (getUserInput("Press a key to move: (W) Up, (A) Left, (S) Down, (D) Right, ( ) Fire Arrow")) {
 		case 'w':
 			cave->moveUp();
@@ -126,7 +128,7 @@ int chooseMove(Cave *cave, int numArrows) {
 		case ' ':
 			if (numArrows > 0) {
 				numArrows--;
-				fireArrow(cave);
+				fireArrow(cave, debugMode);
 			}
 			break;
 		default:
@@ -143,14 +145,15 @@ int chooseMove(Cave *cave, int numArrows) {
  ** Post-Conditions: the function will print the state of the wumpus, number of arrows left & the gold collection state
  *********************************************************************/
 void printGameStatus(Cave *cave, int numArrows) {
+	std::cout << "You have ";
 	if (!cave->isWumpusAlive())
-		std::cout << "You killed the Wumpus";
+		std::cout << "killed the Wumpus and have ";
 	else if (numArrows > 0)
-		std::cout << "You have " << numArrows << " arrows left";
+		std::cout << numArrows << " arrows left and have ";
 	if (cave->isGoldCollected())
-		std::cout << " and have collected the gold!" << std::endl;
+		std::cout << "collected the gold!" << std::endl;
 	else
-		std::cout << " but have not collected the gold." << std::endl;
+		std::cout << "not collected the gold." << std::endl;
 }
 
 /*********************************************************************
@@ -170,7 +173,7 @@ void newGame(int size, int seed, bool debugMode) {
 		cave.print(debugMode);
 		cave.percepts();
 		printGameStatus(&cave, numArrows);
-		numArrows = chooseMove(&cave, numArrows);
+		numArrows = chooseMove(&cave, numArrows, debugMode);
 		
 		// Run encounter
 		cave.encounter();
@@ -192,6 +195,7 @@ int main(int argc, const char * argv[]) {
 	
 	// Creates a cave for the game to use
 	// Starts a game based on that cave
+	std::cout << "\x1B[2J\x1B[H";
 	newGame(size, seed, debugMode);
 	
 	char input;

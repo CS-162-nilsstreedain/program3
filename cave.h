@@ -17,6 +17,7 @@
 class Cave {
 private:
 	int size;
+	int seed;
 	std::vector<std::vector<Room*>> cave;
 	int userX;
 	int userY;
@@ -24,7 +25,7 @@ private:
 	bool wumpusAlive;
 	bool goldCollected;
 	
-	void setupRandomRoom(Event*, int);
+	void setupRandomRoom(Event*);
 	Room* getRoom(int, int) const;
 	void percept(int, int) const;
 	void printSeparator() const;
@@ -32,6 +33,7 @@ private:
 	void printUserPos(Room*) const;
 	
 	void arrowRoom(int, int);
+	void moveWumpus();
 	void wumpusEncounter();
 	void ropeEncounter();
 	void batEncounter();
