@@ -66,56 +66,6 @@ Cave::~Cave() {
 }
 
 /*********************************************************************
- ** Function: Cave()
- ** Description: Copy Constructor for the cave class
- ** Parameters: const Cave& cave
- ** Pre-Conditions: cave must be provided
- ** Post-Conditions: A copy of cave will be created
- *********************************************************************/
-Cave::Cave(const Cave& cave) {
-	size = cave.size;
-	userX = cave.userX;
-	userY = cave.userY;
-	
-	gameOver = cave.gameOver;
-	wumpusAlive = cave.wumpusAlive;
-	goldCollected = cave.goldCollected;
-	
-	for (int i = 0; i < size; i++) {
-		std::vector<Room*> column;
- 		for (int j = 0; j < size; j++)
-			column.push_back(new Room(i, j, cave.getRoom(i, j)->getEvent()));
-		this->cave.push_back(column);
-	}
-}
-
-/*********************************************************************
- ** Function: Cave()
- ** Description: Assignment Operator Constructor for the cave class
- ** Parameters: const Cave& cave
- ** Pre-Conditions: cave must be provided
- ** Post-Conditions: A copy of cave will be created & returned
- *********************************************************************/
-Cave& Cave::operator= (const Cave& cave) {
-	size = cave.size;
-	userX = cave.userX;
-	userY = cave.userY;
-	
-	gameOver = cave.gameOver;
-	wumpusAlive = cave.wumpusAlive;
-	goldCollected = cave.goldCollected;
-	
-	for (int i = 0; i < size; i++) {
-		std::vector<Room*> column;
-		for (int j = 0; j < size; j++)
-			column.push_back(cave.getRoom(i, j));
-		this->cave.push_back(column);
-	}
-	
-	return *this;
-}
-
-/*********************************************************************
  ** Function: getRoom()
  ** Description: Returns the Room at position (x, y)
  ** Parameters: int x, int y
@@ -199,28 +149,20 @@ void Cave::percepts() const {
  ** Post-Conditions: A random empty room will be found and an event will be added ot it
  *********************************************************************/
 void Cave::setupRandomRoom(Event *event, int seed) {
-	bool emptyRoomFound = false;
-	Room* randRoom;
 	srand(seed);
+	Room* randRoom;
+	int randX, randY;
 	
-	// While an empty room has not been found
-	while(!emptyRoomFound) {
-		// Get a random room
-		int randX = rand() % size;
-		int randY = rand() % size;
+	do {
+		randX = rand() % size;
+		randY = rand() % size;
 		randRoom = getRoom(randX, randY);
-		
-		// Check if the room is empty
-		emptyRoomFound = randRoom->getEvent()->getId() == ' ';
-		
-		// If it is empty, set the event. If the room is the rope, set the user position
-		if (emptyRoomFound) {
-			randRoom->setEvent(event);
-			if (event->getId() == 'r') {
-				userX = randX;
-				userY = randY;
-			}
-		}
+	} while(!(randRoom->getEvent()->getId() == ' '));
+	
+	randRoom->setEvent(event);
+	if (event->getId() == 'r') {
+		userX = randX;
+		userY = randY;
 	}
 }
 
@@ -347,12 +289,9 @@ void Cave::moveRight() {
  ** Post-Conditions: an arrow will be fired into the given room.
  *********************************************************************/
 void Cave::arrowRoom(int x, int y) {
-	if (x >= 0 && x < size && y >= 0 && y < size) {
-		if (getRoom(x, y)->getEvent()->getId() == 'w') {
-			getRoom(x, y)->setEvent(new Empty);
+	if (x >= 0 && x < size && y >= 0 && y < size)
+		if (getRoom(x, y)->getEvent()->getId() == 'w')
 			wumpusAlive = false;
-		}
-	}
 }
 
 /*********************************************************************
@@ -389,7 +328,6 @@ void Cave::arrowDown() {
 void Cave::arrowLeft() {
 	for (int i = 1; i < 4; i++)
 		arrowRoom(userX, userY - i);
-	
 }
 
 /*********************************************************************
@@ -402,7 +340,6 @@ void Cave::arrowLeft() {
 void Cave::arrowRight() {
 	for (int i = 1; i < 4; i++)
 		arrowRoom(userX, userY + i);
-	
 }
 
 /*********************************************************************
@@ -418,8 +355,7 @@ void Cave::encounter() {
 			goldCollected = true;
 			break;
 		case 'w':
-			std::cout << "You have been killed by the Wumpus!" << std::endl;
-			gameOver = true;
+			wumpusEncounter();
 			break;
 		case 'p':
 			std::cout << "You have fallen into the bottomless pit!" << std::endl;
@@ -437,6 +373,20 @@ void Cave::encounter() {
 }
 
 /*********************************************************************
+ ** Function: wumpusEncounter()
+ ** Description: Function for encountering a wumpus in the cave
+ ** Parameters: N/A
+ ** Pre-Conditions: N/A
+ ** Post-Conditions: The game will end if the user has not killed the wumpus, otherwise it will continue
+ *********************************************************************/
+void Cave::wumpusEncounter() {
+	if (wumpusAlive) {
+		std::cout << "You have been killed by the Wumpus!" << std::endl;
+		gameOver = true;
+	}
+}
+
+/*********************************************************************
  ** Function: ropeEncounter()
  ** Description: Function for encountering a rope in the cave
  ** Parameters: N/A
@@ -444,12 +394,11 @@ void Cave::encounter() {
  ** Post-Conditions: The game will end if the user collected the gold, otherwise it will continue
  *********************************************************************/
 void Cave::ropeEncounter() {
-	if (!goldCollected) {
-		std::cout << "You may not leave the cave without the gold." << std::endl;
-	} else {
+	if (goldCollected) {
 		std::cout << "You have escpaed the cave with the gold!" << std::endl;
 		gameOver = true;
-	}
+	} else
+		std::cout << "You may not leave the cave without the gold." << std::endl;
 }
 
 /*********************************************************************
@@ -461,8 +410,8 @@ void Cave::ropeEncounter() {
  *********************************************************************/
 void Cave::batEncounter() {
 	std::cout << "You have been been moved to another room by a bat!" << std::endl;
-	  srand(time(0));
-	  userX = rand() % size;
-	  userY = rand() % size;
-	  encounter();
+	srand(static_cast<unsigned int>(time(0)));
+	userX = rand() % size;
+	userY = rand() % size;
+	encounter();
 }

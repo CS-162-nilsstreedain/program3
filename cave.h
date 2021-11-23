@@ -20,46 +20,40 @@ private:
 	std::vector<std::vector<Room*>> cave;
 	int userX;
 	int userY;
-	
 	bool gameOver;
 	bool wumpusAlive;
 	bool goldCollected;
 	
 	void setupRandomRoom(Event*, int);
-	
+	Room* getRoom(int, int) const;
+	void percept(int, int) const;
 	void printSeparator() const;
 	void printEvents(Room*) const;
 	void printUserPos(Room*) const;
-	void percept(int, int) const;
 	
 	void arrowRoom(int, int);
-	
+	void wumpusEncounter();
 	void ropeEncounter();
 	void batEncounter();
 public:
 	Cave(int, int);
 	~Cave();
-	Cave(const Cave&);
-	Cave& operator= (const Cave&);
 	
-	Room* getRoom(int, int) const;
 	bool isGameOver() const;
 	bool isWumpusAlive() const;
 	bool isGoldCollected() const;
 	void percepts() const;
 	void print(bool) const;
+	void encounter();
 	
 	void moveUp();
 	void moveDown();
 	void moveLeft();
 	void moveRight();
-	
 	void arrowUp();
 	void arrowDown();
 	void arrowLeft();
 	void arrowRight();
-	
-	void encounter();
 };
 
 #endif /* cave_h */

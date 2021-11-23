@@ -187,7 +187,7 @@ void newGame(int size, int seed, bool debugMode) {
 int main(int argc, const char * argv[]) {
 	int size = verifySizeArgument((char*)argv[1]);
 	bool debugMode = verifyDebugArgument((char*)argv[2]);
-	srand(time(0));
+	srand(static_cast<unsigned int>(time(0)));
 	int seed = rand();
 	
 	// Creates a cave for the game to use

@@ -18,7 +18,6 @@ protected:
 	char eventID;
 public:
 	Event();
-//	virtual ~Event()=0;
 	
 	void percept() const;
 	char getId() const;

@@ -20,7 +20,6 @@ private:
 	Event* event;
 public:
 	Room(int, int);
-	Room(int, int, Event*);
 	~Room();
 	Event* getEvent() const;
 	void setEvent(Event*);
