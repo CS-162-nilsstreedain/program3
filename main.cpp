@@ -160,20 +160,20 @@ void printGameStatus(Cave *cave, int numArrows) {
  ** Pre-Conditions: cave & debugMode must be provided
  ** Post-Conditions: the function will start the game based on the cave & debug mode and return when the game hass ended
  *********************************************************************/
-void newGame(Cave *cave, bool debugMode) {
+void newGame(int size, int seed, bool debugMode) {
 	int numArrows = 3;
-	Cave caveTemp = *cave;
+	Cave cave(size, seed);
 	
 	// While the game is not over, the game state will be printed and the user will be asked to make a move
-	while (!caveTemp.isGameOver()) {
+	while (!cave.isGameOver()) {
 		// Print out user interface & have user choose move.
-		caveTemp.print(debugMode);
-		caveTemp.percepts();
-		printGameStatus(&caveTemp, numArrows);
-		numArrows = chooseMove(&caveTemp, numArrows);
+		cave.print(debugMode);
+		cave.percepts();
+		printGameStatus(&cave, numArrows);
+		numArrows = chooseMove(&cave, numArrows);
 		
 		// Run encounter
-		caveTemp.encounter();
+		cave.encounter();
 	}
 }
 
@@ -187,11 +187,12 @@ void newGame(Cave *cave, bool debugMode) {
 int main(int argc, const char * argv[]) {
 	int size = verifySizeArgument((char*)argv[1]);
 	bool debugMode = verifyDebugArgument((char*)argv[2]);
+	srand(time(0));
+	int seed = rand();
 	
 	// Creates a cave for the game to use
-	Cave cave(size);
 	// Starts a game based on that cave
-	newGame(&cave, debugMode);
+	newGame(size, seed, debugMode);
 	
 	char input;
 	do {
@@ -200,10 +201,10 @@ int main(int argc, const char * argv[]) {
 		
 		// Determines what to do based on the input
 		if (input == '1') {
-			newGame(&cave, debugMode);
+			newGame(size, seed, debugMode);
 		} else if (input == '2') {
-			cave = Cave(size);
-			newGame(&cave, debugMode);
+			seed = rand();
+			newGame(size, seed, debugMode);
 		}
 	} while (input == '1' || input == '2');
 	

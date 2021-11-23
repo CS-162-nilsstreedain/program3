@@ -25,7 +25,7 @@ private:
 	bool wumpusAlive;
 	bool goldCollected;
 	
-	void setupRandomRoom(Event*);
+	void setupRandomRoom(Event*, int);
 	
 	void printSeparator() const;
 	void printEvents(Room*) const;
@@ -37,7 +37,7 @@ private:
 	void ropeEncounter();
 	void batEncounter();
 public:
-	Cave(int);
+	Cave(int, int);
 	~Cave();
 	Cave(const Cave&);
 	Cave& operator= (const Cave&);

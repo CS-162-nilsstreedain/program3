@@ -24,6 +24,19 @@ Room::Room(int Xpos, int Ypos) {
 }
 
 /*********************************************************************
+ ** Function: Room()
+ ** Description: Destructor for the room class
+ ** Parameters: int Xpos, int Ypos, Event* event
+ ** Pre-Conditions: Xpos, Ypos & Event* event must be provided
+ ** Post-Conditions: A room will be created
+ *********************************************************************/
+Room::Room(int Xpos, int Ypos, Event* event) {
+	this->Xpos = Xpos;
+	this->Ypos = Ypos;
+	this->event = event;
+}
+
+/*********************************************************************
  ** Function: ~Room()
  ** Description: Destructor for the room class
  ** Parameters: N/A
